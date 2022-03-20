@@ -1,0 +1,125 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.2379, 0.61, 0.268908, 1 )
+
+[sub_resource type="PrismMesh" id=8]
+left_to_right = 0.0
+size = Vector3( 5, 2, 10 )
+
+[sub_resource type="PrismMesh" id=9]
+left_to_right = 0.0
+size = Vector3( 8, 4, 15 )
+
+[sub_resource type="CubeMesh" id=4]
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="ConcavePolygonShape" id=5]
+data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+cast_shadow = 0
+width = 100.0
+height = 10.0
+depth = 100.0
+
+[node name="CSGBox2" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
+operation = 2
+width = 99.0
+height = 9.0
+depth = 99.0
+material = SubResource( 7 )
+
+[node name="CSGMesh" type="CSGMesh" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11, -0.5, 0 )
+mesh = SubResource( 8 )
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner/CSGMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -11 )
+width = 15.0
+depth = 32.0
+
+[node name="CSGMesh" type="CSGMesh" parent="CSGCombiner/CSGMesh/CSGBox"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 3, 0 )
+mesh = SubResource( 9 )
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner/CSGMesh/CSGBox/CSGMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0, 0 )
+width = 11.0
+height = 4.0
+depth = 15.0
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.718101, 0.00201463, -0.00106214, -0.0020377, 0.717925, -0.015928, 0.00101718, 0.0159309, 0.717927, 0.610224, 2.18837, 3.67462 )
+jump_force = 6.0
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.838671, 0.544639, 0, -0.544639, 0.838671, 0, 10, 0 )
+light_energy = 0.7
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.2, 0, 0, 0, 1, 0, 1, -12 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/StaticBody"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.2, 0, 0, 0, 1, -0.00301933, 2.33538, -15.4915 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance2/StaticBody"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="."]
+transform = Transform( 4.4075, 0, 0, 0, 0.204037, 0, 0, 0, 5.37727, 7.69535, 6.84991, -21.7459 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance5/StaticBody"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 2.95039, 0, -8.28577e-08, 0, -0.0208063, 0, 2.57931e-07, 0, 0.947782, -0.0042543, 3.02265, -19.2002 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance3/StaticBody"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="."]
+transform = Transform( 2.95039, 0, 0, 0, 0.2, 0, 0, 0, 1.57444, -0.261553, 4.39981, -24.3818 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance4/StaticBody"]
+shape = SubResource( 5 )

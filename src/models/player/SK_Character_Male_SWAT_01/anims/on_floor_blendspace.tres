@@ -1,0 +1,21 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=4 format=2]
+
+[ext_resource path="res://models/player/SK_Character_Male_SWAT_01/anims/movement_blendspace.tres" type="AnimationNodeBlendSpace2D" id=1]
+
+[sub_resource type="AnimationNodeBlend2" id=3]
+filter_enabled = true
+filters = [ "Root/Skeleton:clavicle_l", "Root/Skeleton:clavicle_r", "Root/Skeleton:eyebrows", "Root/Skeleton:eyes", "Root/Skeleton:finger_1_l", "Root/Skeleton:finger_1_r", "Root/Skeleton:finger_2_l", "Root/Skeleton:finger_2_r", "Root/Skeleton:finger_3_l", "Root/Skeleton:finger_3_r", "Root/Skeleton:hand_l", "Root/Skeleton:hand_r", "Root/Skeleton:head", "Root/Skeleton:index_finger_1_l", "Root/Skeleton:index_finger_1_r", "Root/Skeleton:index_finger_2_l", "Root/Skeleton:index_finger_2_r", "Root/Skeleton:index_finger_3_l", "Root/Skeleton:index_finger_3_r", "Root/Skeleton:lowerarm_l", "Root/Skeleton:lowerarm_r", "Root/Skeleton:neck_1", "Root/Skeleton:pelvis", "Root/Skeleton:spine_1", "Root/Skeleton:spine_2", "Root/Skeleton:spine_3", "Root/Skeleton:thumb_1_l", "Root/Skeleton:thumb_1_r", "Root/Skeleton:thumb_2_l", "Root/Skeleton:thumb_2_r", "Root/Skeleton:upper_arm_l", "Root/Skeleton:upper_arm_r" ]
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "Idle Aiming"
+
+[resource]
+graph_offset = Vector2( -348, 106.75 )
+nodes/Aim/node = SubResource( 3 )
+nodes/Aim/position = Vector2( 71, 127 )
+nodes/Aiming/node = SubResource( 2 )
+nodes/Aiming/position = Vector2( -320, 120 )
+nodes/Movement/node = ExtResource( 1 )
+nodes/Movement/position = Vector2( -320, 280 )
+nodes/output/position = Vector2( 360, 160 )
+node_connections = [ "output", 0, "Aim", "Aim", 0, "Movement", "Aim", 1, "Aiming" ]

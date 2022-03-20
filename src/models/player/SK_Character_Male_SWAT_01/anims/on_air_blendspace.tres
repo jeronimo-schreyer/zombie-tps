@@ -1,0 +1,18 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=4 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "Jump Down"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "Jump Loop"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=3]
+advance_condition = "Landing"
+
+[resource]
+"states/Jump Down/node" = SubResource( 1 )
+"states/Jump Down/position" = Vector2( 417, 44 )
+"states/Jump Loop/node" = SubResource( 2 )
+"states/Jump Loop/position" = Vector2( 241, 43 )
+transitions = [ "Jump Loop", "Jump Down", SubResource( 3 ) ]
+start_node = "Jump Loop"

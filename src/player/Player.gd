@@ -11,13 +11,14 @@ onready var rig = $CameraRig
 onready var mesh = $Base
 onready var anim_tree = $Base/Mesh/AnimationTree
 onready var floor_raycast = $Base/FloorRayCast
+onready var movement_line = $ImmediateGeometry
 
 var velocity = Vector3.ZERO
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rig.add_raycast_exception(self)
+	pass
 
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
@@ -27,25 +28,30 @@ func _physics_process(delta):
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_down", "ui_up")
 	).normalized()
-	var animation_movement = input_direction
+	var animation_movement = Vector2.ZERO
+	var collision_normal = floor_raycast.get_collision_normal()
 
 	if input_direction != Vector2.ZERO:
 		# Get direction acording to camera
-		var direction = Vector3.ZERO
 		var xform = rig.camera.get_global_transform()
-		direction += -xform.basis.z * input_direction.y
-		direction += xform.basis.x * input_direction.x
+		var direction = xform.basis.x * input_direction.x \
+			- xform.basis.z * input_direction.y \
+			- collision_normal
 
 		# Apply in velocity vector
 		velocity.x = direction.x * walk_force
 		velocity.z = direction.z * walk_force
 
-		# Rotate mesh in the movement direction
-		var look_point : Vector3
-		look_point = transform.origin + direction
-		mesh.look_at(look_point, Vector3.UP)
-		mesh.rotation_degrees.x = 0
-		animation_movement = Vector2.DOWN
+		if is_pointing():
+			mesh.rotation = rig.rotation
+			animation_movement = input_direction
+		else:
+			# Rotate mesh in the movement direction
+			var look_point : Vector3
+			look_point = transform.origin + direction
+			mesh.look_at(look_point, Vector3.UP)
+			mesh.rotation_degrees.x = 0
+			animation_movement = Vector2.DOWN
 
 	# If no input, then deaccelerate
 	elif velocity != Vector3.ZERO:
@@ -57,12 +63,10 @@ func _physics_process(delta):
 	if !is_on_floor:
 		velocity.y = max(velocity.y + gravity.y * delta, gravity.y)
 
-	#warning-ignore:return_value_discarded
-	move_and_slide(velocity, Vector3.UP, true)
+	movement_line.target = move_and_slide(velocity, Vector3.UP, true)
 
 	if is_on_floor:
 		# Align with floor surface
-		var collision_normal = floor_raycast.get_collision_normal()
 		mesh.global_transform.basis.y = collision_normal
 		mesh.global_transform.basis.x = -mesh.global_transform.basis.z.cross(collision_normal)
 		mesh.global_transform.basis = mesh.global_transform.basis.orthonormalized()
@@ -91,6 +95,10 @@ func jump():
 	anim_tree.set("parameters/On Floor/conditions/Jump", false)
 
 
+func is_pointing():
+	return Input.is_action_pressed("point")
+
+
 func _input(_event):
 	# Aim
-	anim_tree.set("parameters/On Floor/Movement/Aim/blend_amount", 1.0 if Input.is_action_pressed("point") else 0.0)
+	anim_tree.set("parameters/On Floor/Movement/Aim/blend_amount", 1.0 if is_pointing() else 0.0)

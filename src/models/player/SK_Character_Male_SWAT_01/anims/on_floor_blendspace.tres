@@ -10,12 +10,12 @@ filters = [ "Root/Skeleton:clavicle_l", "Root/Skeleton:clavicle_r", "Root/Skelet
 animation = "Idle Aiming"
 
 [resource]
-graph_offset = Vector2( -348, 106.75 )
+graph_offset = Vector2( -223, 152 )
 nodes/Aim/node = SubResource( 3 )
 nodes/Aim/position = Vector2( 71, 127 )
 nodes/Aiming/node = SubResource( 2 )
 nodes/Aiming/position = Vector2( -320, 120 )
 nodes/Movement/node = ExtResource( 1 )
 nodes/Movement/position = Vector2( -320, 280 )
-nodes/output/position = Vector2( 360, 160 )
+nodes/output/position = Vector2( 600, 240 )
 node_connections = [ "output", 0, "Aim", "Aim", 0, "Movement", "Aim", 1, "Aiming" ]

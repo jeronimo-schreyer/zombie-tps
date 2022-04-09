@@ -1,6 +1,6 @@
 extends Spatial
 
-const smoke = preload("res://bullet_smoke.tscn")
+const smoke = preload("res://fx/bullet_smoke.tscn")
 
 onready var rig = $"../../CameraRig"
 onready var mesh = $MeshInstance
@@ -22,7 +22,7 @@ func get_look_point():
 	return look_point
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_pressed("point"):
 		mesh.look_at(get_look_point(), Vector3.UP)
 

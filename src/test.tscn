@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://models/ninja/ninja.tscn" type="PackedScene" id=1]
 
 [sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0.2379, 0.61, 0.268908, 1 )
@@ -61,10 +61,6 @@ width = 11.0
 height = 4.0
 depth = 15.0
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.718101, 0.00201463, -0.00106214, -0.0020377, 0.717925, -0.015928, 0.00101718, 0.0159309, 0.717927, 0.610224, 2.18837, 3.67462 )
-jump_force = 6.0
-
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.838671, 0.544639, 0, -0.544639, 0.838671, 0, 10, 0 )
 light_energy = 0.7
@@ -123,3 +119,6 @@ __meta__ = {
 
 [node name="CollisionShape" type="CollisionShape" parent="MeshInstance4/StaticBody"]
 shape = SubResource( 5 )
+
+[node name="ninja" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.18846, 0 )

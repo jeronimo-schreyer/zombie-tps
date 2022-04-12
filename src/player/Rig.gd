@@ -4,7 +4,6 @@ export (float) var joy_rotate_speed
 export (float) var mouse_sensitivity
 export (float) var max_camera_angle
 
-onready var raycast = $SpringArm/Camera/RayCast
 onready var spring = $SpringArm
 onready var camera = $SpringArm/Camera
 
@@ -26,6 +25,7 @@ func _input(event):
 		rotate_y(deg2rad(event.relative.x * mouse_sensitivity * -1))
 		clamp_camera()
 
+
 func clamp_camera():
 	var camera_rot = spring.rotation
 	camera_rot.x = clamp(camera_rot.x, deg2rad(-max_camera_angle), deg2rad(max_camera_angle))
@@ -41,5 +41,4 @@ func _process(delta):
 
 
 func add_raycast_exception(object):
-	raycast.add_exception(object)
 	spring.add_excluded_object(object.get_rid())

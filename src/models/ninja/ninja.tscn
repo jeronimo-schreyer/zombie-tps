@@ -15,7 +15,7 @@
 [ext_resource path="res://models/ninja/ninja/Walk R.anim" type="Animation" id=13]
 [ext_resource path="res://models/ninja/ninja/ground_movement.tres" type="AnimationNodeBlendSpace2D" id=14]
 [ext_resource path="res://player/Rig.gd" type="Script" id=15]
-[ext_resource path="res://player/Player.gd" type="Script" id=16]
+[ext_resource path="res://player/Player2.gd" type="Script" id=16]
 [ext_resource path="res://debug/movement_line/movement_line.tscn" type="PackedScene" id=17]
 [ext_resource path="res://models/ninja/ninja/Idle.anim" type="Animation" id=18]
 [ext_resource path="res://models/ninja/ninja/Kick.anim" type="Animation" id=19]
@@ -212,9 +212,8 @@ graph_offset = Vector2( -106, -27 )
 [node name="KinematicBody" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 16 )
-run_force = 10.0
-walk_force = 5.0
-jump_force = 10.0
+jump_force = 30.0
+acceleration = 80.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.88, 0 )
@@ -223,7 +222,7 @@ shape = SubResource( 15 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="Root" type="Spatial" parent="Mesh"]
-transform = Transform( 0.00731574, -0.00679488, -0.000556405, 1.41281e-05, 0.000831235, -0.00996538, 0.00681761, 0.00728963, 0.000617709, -0.0585696, -0.0571981, 0.0639902 )
+transform = Transform( 0.0072994, -0.00681583, -0.00051309, 2.34795e-05, 0.000775667, -0.00996984, 0.00683507, 0.00727618, 0.000582194, -0.0550723, -0.0601178, 0.0560785 )
 
 [node name="Skeleton" type="Skeleton" parent="Mesh/Root"]
 bones/0/name = "pelvis"
@@ -444,7 +443,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( 0.897047, 0.0595768, -0.437901, -0.436713, 0.271384, -0.857691, 0.0677404, 0.960626, 0.269462, -37.6054, 2.42671, -86.1011 )
+transform = Transform( 0.893731, 0.00730857, -0.448543, -0.430806, 0.292818, -0.853619, 0.125103, 0.956142, 0.26485, -39.0354, 3.26895, -86.0632 )
 visible = false
 bone_name = "hand_r"
 
@@ -461,7 +460,7 @@ max_camera_angle = 30.0
 
 [node name="SpringArm" type="SpringArm" parent="CameraRig"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 1, 0 )
-spring_length = 2.0
+spring_length = 6.0
 margin = 0.1
 
 [node name="Camera" type="Camera" parent="CameraRig/SpringArm"]
@@ -491,7 +490,6 @@ anims/Kick = ExtResource( 19 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 12 )
 parameters/conditions/On_Air = false
 parameters/conditions/On_Ground = false

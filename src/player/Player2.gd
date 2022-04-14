@@ -7,6 +7,7 @@ export (float) var jump_force = 10
 export (float) var acceleration = 20
 export (float) var deacceleration_factor = 3.0
 export (float) var air_acceleration_factor = 0.5
+export (float) var turn_speed = 10
 
 var linear_velocity : Vector3
 var jumping = false
@@ -59,7 +60,6 @@ func _physics_process(delta):
 		hv = hdir * hspeed
 
 		if Input.is_action_just_pressed("ui_select") and not jumping:
-			#vv = jump_force
 			jumping = true
 			anim_tree.get("parameters/On_Ground/playback").travel("Run Jump")
 	else:
@@ -69,20 +69,20 @@ func _physics_process(delta):
 				hv = hv.normalized() * run_speed
 		else:
 			#hspeed = max(hspeed - acceleration * air_acceleration_factor * delta, 0.0)
-			# use this version to stop the player on air if not press ing keys
+			# dont use air_acceleration_factor to stop the player on air if not pressing keys
 			hspeed = max(hspeed - acceleration * delta, 0.0)
 			hv = hdir * hspeed
-#			if hv.length() > max_speed:
-#				hv = hv.normalized() * max_speed
 
+	# align with horizontal direction
+	var orientation = mesh.global_transform.basis
 	if hdir.length() > 0:
-		# align with horizontal direction
-		mesh.look_at(mesh.global_transform.origin - hdir, Vector3.UP)
+		orientation = Basis(orientation.get_rotation_quat().slerp(
+			Transform().looking_at(-hdir, Vector3.UP).basis.get_rotation_quat(), turn_speed * delta))
 
-	# align with floor surface
-	mesh.global_transform.basis.y = updir
-	mesh.global_transform.basis.x = -mesh.global_transform.basis.z.cross(updir)
-	mesh.global_transform.basis = mesh.global_transform.basis.orthonormalized()
+	# align with floor surface normal
+	orientation.y = updir
+	orientation.x = -orientation.z.cross(updir)
+	mesh.global_transform.basis = orientation.orthonormalized()
 
 	# release jump
 	if jumping and vv < 0:

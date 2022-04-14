@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://models/weapons/odachi/SM_Wep_Odachi_01/SM_Wep_Odachi_01_Mesh.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://models/ninja/ninja/Walk F.anim" type="Animation" id=2]
@@ -24,6 +24,8 @@
 [ext_resource path="res://models/ninja/ninja/Sword Hit.anim" type="Animation" id=22]
 [ext_resource path="res://models/ninja/ninja/Block Hit.anim" type="Animation" id=23]
 [ext_resource path="res://models/ninja/ninja/Withdraw Sword.anim" type="Animation" id=24]
+[ext_resource path="res://models/ninja/ninja/Braced Hang Idle.anim" type="Animation" id=25]
+[ext_resource path="res://models/ninja/ninja/Start Brace Hang.anim" type="Animation" id=26]
 
 [sub_resource type="CapsuleShape" id=15]
 radius = 0.3
@@ -201,7 +203,7 @@ states/On_Ground/node = SubResource( 8 )
 states/On_Ground/position = Vector2( 184, 41 )
 transitions = [ "On_Ground", "On_Air", SubResource( 9 ), "On_Air", "On_Ground", SubResource( 10 ) ]
 start_node = "On_Ground"
-graph_offset = Vector2( -106, -27 )
+graph_offset = Vector2( -386, -81 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
@@ -222,7 +224,7 @@ shape = SubResource( 15 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="Root" type="Spatial" parent="Mesh"]
-transform = Transform( 0.0072994, -0.00681583, -0.00051309, 2.34795e-05, 0.000775667, -0.00996984, 0.00683507, 0.00727618, 0.000582194, -0.0550723, -0.0601178, 0.0560785 )
+transform = Transform( 0.00994023, -0.00102393, -0.000378566, 5.1406e-05, 0.00390296, -0.00920675, 0.00109046, 0.00914978, 0.0038849, -0.0375242, 0.427383, 0.557244 )
 
 [node name="Skeleton" type="Skeleton" parent="Mesh/Root"]
 bones/0/name = "pelvis"
@@ -443,7 +445,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( 0.893731, 0.00730857, -0.448543, -0.430806, 0.292818, -0.853619, 0.125103, 0.956142, 0.26485, -39.0354, 3.26895, -86.0632 )
+transform = Transform( -0.0400355, 0.0130751, -0.999113, 0.945654, 0.323427, -0.03366, 0.3227, -0.946163, -0.025313, -33.2834, 68.4494, -164.991 )
 visible = false
 bone_name = "hand_r"
 
@@ -472,6 +474,7 @@ method_call_mode = 1
 "anims/Air Loop" = ExtResource( 3 )
 "anims/Block Hit" = ExtResource( 23 )
 "anims/Block Idle" = ExtResource( 20 )
+"anims/Braced Hang Idle" = ExtResource( 25 )
 anims/Fall = ExtResource( 6 )
 anims/Idle = ExtResource( 18 )
 anims/Kick = ExtResource( 19 )
@@ -479,6 +482,7 @@ anims/Kick = ExtResource( 19 )
 "anims/Run F" = ExtResource( 11 )
 "anims/Run Jump" = ExtResource( 9 )
 "anims/Seathing Sword" = ExtResource( 21 )
+"anims/Start Brace Hang" = ExtResource( 26 )
 "anims/Sword Hit" = ExtResource( 22 )
 "anims/T Pose" = ExtResource( 10 )
 "anims/Walk B" = ExtResource( 8 )

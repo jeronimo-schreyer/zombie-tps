@@ -11,11 +11,13 @@ export (float) var turn_speed = 10
 
 var linear_velocity : Vector3
 var jumping = false
+var can_move = true setget set_can_move
 
 onready var anim_tree = $AnimationTree
 onready var rig = $CameraRig
 onready var mesh = $Mesh
 onready var floor_raycast = $FloorRayCast
+onready var climb_raycast = $Mesh/ClimbRayCast
 onready var movement_line = $ImmediateGeometry
 
 onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") \
@@ -42,7 +44,8 @@ func _physics_process(delta):
 	var input_direction = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
-	)
+	) if can_move else Vector2.ZERO
+
 	var dir = cam_basis * Vector3(input_direction.x, 0, input_direction.y)
 	dir.y = 0
 	dir = dir.normalized()
@@ -59,9 +62,14 @@ func _physics_process(delta):
 
 		hv = hdir * hspeed
 
-		if Input.is_action_just_pressed("ui_select") and not jumping:
-			jumping = true
-			anim_tree.get("parameters/On_Ground/playback").travel("Run Jump")
+		if Input.is_action_just_pressed("ui_select"):
+			if climb_raycast.is_colliding():
+				global_transform.origin = climb_raycast.get_collision_point()
+				anim_tree.get("parameters/On_Ground/playback").travel("Climb Up")
+				can_move = false
+			elif not jumping:
+				jumping = true
+				anim_tree.get("parameters/On_Ground/playback").travel("Run Jump")
 	else:
 		if dir.length() > 0.1:
 			hv += dir * (acceleration * air_acceleration_factor * delta)
@@ -108,3 +116,7 @@ func _physics_process(delta):
 
 func jump():
 	linear_velocity.y = jump_force
+
+
+func set_can_move(_can_move: bool):
+	can_move = _can_move

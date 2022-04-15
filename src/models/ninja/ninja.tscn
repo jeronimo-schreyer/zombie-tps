@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://models/weapons/odachi/SM_Wep_Odachi_01/SM_Wep_Odachi_01_Mesh.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://models/ninja/ninja/Walk F.anim" type="Animation" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://models/ninja/ninja/Withdraw Sword.anim" type="Animation" id=24]
 [ext_resource path="res://models/ninja/ninja/Braced Hang Idle.anim" type="Animation" id=25]
 [ext_resource path="res://models/ninja/ninja/Start Brace Hang.anim" type="Animation" id=26]
+[ext_resource path="res://models/ninja/ninja/Climb Up.anim" type="Animation" id=27]
 
 [sub_resource type="CapsuleShape" id=15]
 radius = 0.3
@@ -173,20 +174,34 @@ transitions = [ "Air Loop", "Fall", SubResource( 4 ) ]
 start_node = "Air Loop"
 end_node = "Fall"
 
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "Climb Up"
+
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Run Jump"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=7]
 xfade_time = 0.2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+switch_mode = 2
+auto_advance = true
+xfade_time = 0.1
+
 [sub_resource type="AnimationNodeStateMachine" id=8]
+"states/Climb Up/node" = SubResource( 16 )
+"states/Climb Up/position" = Vector2( 395, -23 )
 states/Movement/node = ExtResource( 14 )
 states/Movement/position = Vector2( 323, 84 )
 "states/Run Jump/node" = SubResource( 6 )
 "states/Run Jump/position" = Vector2( 573, 84 )
-transitions = [ "Movement", "Run Jump", SubResource( 7 ) ]
+transitions = [ "Movement", "Run Jump", SubResource( 7 ), "Movement", "Climb Up", SubResource( 17 ), "Climb Up", "Movement", SubResource( 18 ) ]
 start_node = "Movement"
 end_node = "Run Jump"
+graph_offset = Vector2( -87, -48 )
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=9]
 advance_condition = "On_Air"
@@ -194,7 +209,6 @@ xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=10]
 advance_condition = "On_Ground"
-xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachine" id=11]
 states/On_Air/node = SubResource( 5 )
@@ -224,7 +238,7 @@ shape = SubResource( 15 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="Root" type="Spatial" parent="Mesh"]
-transform = Transform( 0.00994023, -0.00102393, -0.000378566, 5.1406e-05, 0.00390296, -0.00920675, 0.00109046, 0.00914978, 0.0038849, -0.0375242, 0.427383, 0.557244 )
+transform = Transform( 0.00997159, 0.000694675, 0.000291248, 0.000297922, -8.59034e-05, -0.00999519, -0.000691839, 0.00997547, -0.000106355, 0.0194826, 0.00705161, -0.016258 )
 
 [node name="Skeleton" type="Skeleton" parent="Mesh/Root"]
 bones/0/name = "pelvis"
@@ -445,7 +459,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( -0.0400355, 0.0130751, -0.999113, 0.945654, 0.323427, -0.03366, 0.3227, -0.946163, -0.025313, -33.2834, 68.4494, -164.991 )
+transform = Transform( 0.332817, -0.31668, -0.888226, -0.94271, -0.0887369, -0.321595, 0.0230236, 0.944374, -0.328071, -31.8902, 10.0481, -89.6175 )
 visible = false
 bone_name = "hand_r"
 
@@ -453,6 +467,13 @@ bone_name = "hand_r"
 transform = Transform( 70, -1.90735e-06, 1.90735e-06, 1.52588e-05, 70, 0, -7.62939e-06, -3.8147e-06, 70, 2.21487, 9.79985, 2.6941 )
 mesh = ExtResource( 1 )
 material/0 = null
+
+[node name="ClimbRayCast" type="RayCast" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0.35 )
+enabled = true
+cast_to = Vector3( 0, -0.7, 0 )
+debug_shape_custom_color = Color( 0, 1, 0, 1 )
+debug_shape_thickness = 5
 
 [node name="CameraRig" type="Spatial" parent="."]
 script = ExtResource( 15 )
@@ -475,6 +496,7 @@ method_call_mode = 1
 "anims/Block Hit" = ExtResource( 23 )
 "anims/Block Idle" = ExtResource( 20 )
 "anims/Braced Hang Idle" = ExtResource( 25 )
+"anims/Climb Up" = ExtResource( 27 )
 anims/Fall = ExtResource( 6 )
 anims/Idle = ExtResource( 18 )
 anims/Kick = ExtResource( 19 )
@@ -506,5 +528,5 @@ parameters/On_Ground/Movement/blend_position = Vector2( 0, 0 )
 
 [node name="FloorRayCast" type="RayCast" parent="."]
 enabled = true
-debug_shape_custom_color = Color( 0, 0.835294, 1, 1 )
+debug_shape_custom_color = Color( 0, 1, 0, 1 )
 debug_shape_thickness = 5

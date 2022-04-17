@@ -9,6 +9,7 @@ export (float) var deacceleration_factor = 3.0
 export (float) var air_acceleration_factor = 0.5
 export (float) var turn_speed = 10
 export (float) var crouch_speed = .12
+export (NodePath) var rig
 
 var linear_velocity : Vector3
 var jumping = false
@@ -17,7 +18,6 @@ var can_move = true setget set_can_move
 var standing = true
 
 onready var anim_tree = $AnimationTree
-onready var rig = $CameraRig
 onready var mesh = $Mesh
 onready var floor_raycast = $FloorRayCast
 onready var climb_raycast = $Mesh/ClimbRayCast
@@ -30,6 +30,7 @@ onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	NodePathReflection.LinkNodePaths(self)
 	anim_tree.set_active(true)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://models/weapons/odachi/SM_Wep_Odachi_01/SM_Wep_Odachi_01_Mesh.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://models/ninja/ninja/Walk F.anim" type="Animation" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://models/ninja/ninja/Run F.anim" type="Animation" id=11]
 [ext_resource path="res://models/ninja/ninja/Walk L.anim" type="Animation" id=12]
 [ext_resource path="res://models/ninja/ninja/Walk R.anim" type="Animation" id=13]
-[ext_resource path="res://player/Rig.gd" type="Script" id=15]
 [ext_resource path="res://player/Player.gd" type="Script" id=16]
 [ext_resource path="res://debug/movement_line/movement_line.tscn" type="PackedScene" id=17]
 [ext_resource path="res://models/ninja/ninja/Idle.anim" type="Animation" id=18]
@@ -228,7 +227,7 @@ node_connections = [ "output", 0, "Stance", "Stance", 0, "Crouch", "Stance", 1, 
 animation = "Run Jump"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
-xfade_time = 0.1
+xfade_time = 0.2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=38]
 switch_mode = 2
@@ -296,7 +295,7 @@ shape = SubResource( 15 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="Root" type="Spatial" parent="Mesh"]
-transform = Transform( 0.00977259, 0.00165474, -0.00132605, -0.000993538, -0.00195147, -0.00975729, -0.00187336, 0.00966714, -0.00174269, -0.185541, -0.209498, -0.239225 )
+transform = Transform( 0.00729817, 0.00680622, 0.000641906, 0.000154004, 0.000775031, -0.00996873, -0.00683469, 0.00728524, 0.000460812, 0.0716146, 0.285382, 0.0577043 )
 
 [node name="Skeleton" type="Skeleton" parent="Mesh/Root"]
 bones/0/name = "pelvis"
@@ -507,7 +506,7 @@ skin = SubResource( 1 )
 material/0 = null
 
 [node name="CoinBag" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( 0, 2.98023e-08, -1, 0.988775, -0.149413, -2.98023e-08, -0.149413, -0.988775, 0, 1.55555e-13, -2.08289e-06, -87.6276 )
+transform = Transform( -1.62995e-16, 8.94069e-08, -1, 0.988775, -0.149412, -3.87079e-08, -0.149412, -0.988775, -5.89356e-08, -7.18187e-14, -2.08289e-06, -87.6276 )
 visible = false
 bone_name = "pelvis"
 
@@ -517,7 +516,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( -0.0110374, -0.94988, -0.312421, -0.0858626, 0.312186, -0.946134, 0.996246, 0.0163825, -0.0850059, -80.1627, -4.8424, -139.152 )
+transform = Transform( 0.154222, -0.878964, -0.451263, -0.609961, 0.274605, -0.743331, 0.77728, 0.389891, -0.493784, -66.1768, -12.5688, -97.7425 )
 visible = false
 bone_name = "hand_r"
 
@@ -531,20 +530,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.35 )
 enabled = true
 debug_shape_custom_color = Color( 0, 1, 0, 1 )
 debug_shape_thickness = 5
-
-[node name="CameraRig" type="Spatial" parent="."]
-script = ExtResource( 15 )
-joy_rotate_speed = 72.0
-mouse_sensitivity = 0.1
-max_camera_angle = 30.0
-
-[node name="SpringArm" type="SpringArm" parent="CameraRig"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 1, 0 )
-spring_length = 6.0
-margin = 0.1
-
-[node name="Camera" type="Camera" parent="CameraRig/SpringArm"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Mesh")

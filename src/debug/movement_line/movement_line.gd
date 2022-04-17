@@ -2,7 +2,7 @@ extends ImmediateGeometry
 
 var target := Vector3.ZERO
 
-func _process(delta):
+func _process(_delta):
 	clear()
 
 	begin(Mesh.PRIMITIVE_LINES)

@@ -13,7 +13,7 @@
 [ext_resource path="res://models/ninja/ninja/Run F.anim" type="Animation" id=11]
 [ext_resource path="res://models/ninja/ninja/Walk L.anim" type="Animation" id=12]
 [ext_resource path="res://models/ninja/ninja/Walk R.anim" type="Animation" id=13]
-[ext_resource path="res://player/Player.gd" type="Script" id=16]
+[ext_resource path="res://player/player.gd" type="Script" id=16]
 [ext_resource path="res://debug/movement_line/movement_line.tscn" type="PackedScene" id=17]
 [ext_resource path="res://models/ninja/ninja/Idle.anim" type="Animation" id=18]
 [ext_resource path="res://models/ninja/ninja/Kick.anim" type="Animation" id=19]
@@ -213,7 +213,7 @@ blend_point_2/node = SubResource( 34 )
 blend_point_2/pos = 1.0
 
 [sub_resource type="AnimationNodeBlendTree" id=36]
-graph_offset = Vector2( -301, 50 )
+graph_offset = Vector2( -496, 184 )
 nodes/Crouch/node = SubResource( 30 )
 nodes/Crouch/position = Vector2( -175, 47 )
 nodes/Stance/node = SubResource( 31 )
@@ -258,12 +258,15 @@ advance_condition = "On_Ground"
 xfade_time = 0.06
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=20]
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
 switch_mode = 2
 auto_advance = true
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=22]
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachine" id=11]
 "states/Braced Hang Over/node" = SubResource( 19 )
@@ -271,7 +274,7 @@ auto_advance = true
 states/On_Air/node = SubResource( 5 )
 states/On_Air/position = Vector2( 395, 41 )
 states/On_Ground/node = SubResource( 8 )
-states/On_Ground/position = Vector2( 184, 41 )
+states/On_Ground/position = Vector2( 180, 41 )
 transitions = [ "On_Ground", "On_Air", SubResource( 9 ), "On_Air", "On_Ground", SubResource( 10 ), "On_Ground", "Braced Hang Over", SubResource( 20 ), "Braced Hang Over", "On_Ground", SubResource( 21 ), "On_Air", "Braced Hang Over", SubResource( 22 ) ]
 start_node = "On_Ground"
 graph_offset = Vector2( -367, -104 )
@@ -285,8 +288,6 @@ graph_offset = Vector2( -367, -104 )
 [node name="KinematicBody" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 16 )
-jump_force = 21.0
-acceleration = 80.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.88, 0 )
@@ -302,7 +303,7 @@ bones/0/name = "pelvis"
 bones/0/parent = -1
 bones/0/rest = Transform( 0, 2.98023e-08, -1, 0.988775, -0.149413, -2.98023e-08, -0.149413, -0.988775, 0, 1.55555e-13, -2.08289e-06, -87.6276 )
 bones/0/enabled = true
-bones/0/bound_children = [ NodePath("CoinBag") ]
+bones/0/bound_children = [  ]
 bones/1/name = "spine_1"
 bones/1/parent = 0
 bones/1/rest = Transform( -0.980128, 0.198366, 1.3926e-07, 0.198366, 0.980128, 2.46035e-07, -8.76879e-08, 2.6877e-07, -1, -1.54972e-06, 10.3933, -1.11525e-09 )
@@ -417,7 +418,7 @@ bones/23/name = "hand_r"
 bones/23/parent = 22
 bones/23/rest = Transform( 0.996475, 0.0155353, -0.0824392, 0.0109211, 0.950317, 0.311091, 0.0831763, -0.310894, 0.946798, 1.30402e-06, 27.1145, 0.0381351 )
 bones/23/enabled = true
-bones/23/bound_children = [ NodePath("Sword") ]
+bones/23/bound_children = [  ]
 bones/24/name = "thumb_1_r"
 bones/24/parent = 23
 bones/24/rest = Transform( 0.905104, 0.415785, -0.0889404, -0.378041, 0.882672, 0.27924, 0.194609, -0.219118, 0.956094, 1.17098, 3.51399, -4.50554 )
@@ -506,7 +507,7 @@ skin = SubResource( 1 )
 material/0 = null
 
 [node name="CoinBag" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( -1.62995e-16, 8.94069e-08, -1, 0.988775, -0.149412, -3.87079e-08, -0.149412, -0.988775, -5.89356e-08, -7.18187e-14, -2.08289e-06, -87.6276 )
+transform = Transform( 0, 2.98023e-08, -1, 0.988775, -0.149413, -2.98023e-08, -0.149413, -0.988775, 0, 1.55555e-13, -2.08289e-06, -87.6276 )
 visible = false
 bone_name = "pelvis"
 
@@ -516,7 +517,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( 0.154222, -0.878964, -0.451263, -0.609961, 0.274605, -0.743331, 0.77728, 0.389891, -0.493784, -66.1768, -12.5688, -97.7425 )
+transform = Transform( -0.0110374, -0.94988, -0.312421, -0.0858626, 0.312186, -0.946134, 0.996246, 0.0163825, -0.0850059, -80.1627, -4.8424, -139.152 )
 visible = false
 bone_name = "hand_r"
 
@@ -526,8 +527,13 @@ mesh = ExtResource( 1 )
 material/0 = null
 
 [node name="ClimbRayCast" type="RayCast" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.35 )
+cast_to = Vector3( 0, -0.5, 0 )
+debug_shape_custom_color = Color( 0, 1, 0, 1 )
+debug_shape_thickness = 5
+
+[node name="JumpEdgeRayCast" type="RayCast" parent="Mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0.35 )
-enabled = true
 debug_shape_custom_color = Color( 0, 1, 0, 1 )
 debug_shape_thickness = 5
 
@@ -569,7 +575,7 @@ parameters/On_Air/conditions/Fall = false
 parameters/On_Ground/playback = SubResource( 14 )
 parameters/On_Ground/Movement/Crouch/blend_position = 0
 parameters/On_Ground/Movement/Stance/blend_amount = 1.0
-parameters/On_Ground/Movement/Walk/blend_position = 0
+parameters/On_Ground/Movement/Walk/blend_position = 0.998302
 
 [node name="ImmediateGeometry" parent="." instance=ExtResource( 17 )]
 

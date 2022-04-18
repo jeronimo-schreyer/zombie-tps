@@ -12,10 +12,16 @@ _global_script_classes=[ {
 "base": "MeshInstance",
 "class": "MeshMerger",
 "language": "GDScript",
-"path": "res://addons/MeshMerger.gd"
+"path": "res://addons/mesh_merger.gd"
+}, {
+"base": "Resource",
+"class": "State",
+"language": "GDScript",
+"path": "res://fsm/state.gd"
 } ]
 _global_script_class_icons={
-"MeshMerger": ""
+"MeshMerger": "",
+"State": ""
 }
 
 [application]

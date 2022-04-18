@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://fsm/state_machine.gd" type="Script" id=1]
+[ext_resource path="res://player/states/on_ground.tres" type="Resource" id=2]
+[ext_resource path="res://models/ninja/ninja.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/rig.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/states/on_air.tres" type="Resource" id=5]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=3]
+
+[node name="Player" type="Spatial"]
+script = ExtResource( 1 )
+states = [ ExtResource( 2 ), ExtResource( 5 ) ]
+
+[node name="ninja" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
+
+[node name="Root" parent="ninja/Mesh" index="0"]
+transform = Transform( 0.00993764, 0.00109643, -0.000202952, -4.66095e-05, -0.00141006, -0.00989998, -0.00111409, 0.00983919, -0.00139615, -0.0277078, -0.0579359, -0.0858286 )
+
+[node name="Skeleton" parent="ninja/Mesh/Root" index="0"]
+bones/0/bound_children = [ NodePath("CoinBag") ]
+bones/23/bound_children = [ NodePath("Sword") ]
+
+[node name="AnimationTree" parent="ninja" index="3"]
+parameters/playback = SubResource( 1 )
+parameters/On_Air/playback = SubResource( 2 )
+parameters/On_Ground/playback = SubResource( 3 )
+
+[node name="CameraRig" parent="." instance=ExtResource( 4 )]
+max_camera_angle = 20.0
+player = NodePath("../ninja")
+
+[editable path="ninja"]

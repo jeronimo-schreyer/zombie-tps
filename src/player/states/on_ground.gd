@@ -11,6 +11,7 @@ export (float) var jump_force = 10
 
 var gravity : Vector3
 var standing = true
+var on_combat = false
 
 
 func init():
@@ -31,6 +32,29 @@ func check():
 
 
 func process(delta):
+	if Input.is_action_just_pressed("sword"):
+		on_combat = !on_combat
+		player.anim_tree.set("parameters/On_Ground/Movement/Withdraw Sword/active", on_combat)
+		player.anim_tree.set("parameters/On_Ground/Movement/Seathing Sword/active", !on_combat)
+
+	if Input.is_action_just_pressed("action"):
+		if player.climb_raycast.is_colliding():
+			player.anim_tree.get("parameters/On_Ground/playback").travel("Climb Up")
+			player.can_move = false
+			yield(player.get_tree().create_timer(0.1), "timeout")
+			player.global_transform.origin = player.climb_raycast.get_collision_point()
+		else:
+			standing = !standing
+			var initial = 0 if standing else 1
+			var end = 1 if standing else 0
+			player.tween.interpolate_property(player.anim_tree, \
+				"parameters/On_Ground/Movement/Stance/blend_amount", \
+				initial, end, \
+				.12)
+			player.tween.start()
+
+
+func physics_process(delta):
 	player.linear_velocity += gravity * delta
 
 	var vv = player.linear_velocity.y # vertical velocity
@@ -60,23 +84,7 @@ func process(delta):
 
 	if Input.is_action_just_pressed("jump") and not player.jumping:
 		player.jumping = true
-		#player.anim_tree.get("parameters/On_Ground/playback").travel("Run Jump")
 		vv = jump_force
-
-	if Input.is_action_just_pressed("action"):
-		if player.climb_raycast.is_colliding():
-			player.global_transform.origin = player.climb_raycast.get_collision_point()
-			player.anim_tree.get("parameters/On_Ground/playback").travel("Climb Up")
-			player.can_move = false
-		else:
-			standing = !standing
-			var initial = 0 if standing else 1
-			var end = 1 if standing else 0
-			player.tween.interpolate_property(player.anim_tree, \
-				"parameters/On_Ground/Movement/Stance/blend_amount", \
-				initial, end, \
-				.12)
-			player.tween.start()
 
 	# align with horizontal direction
 	var orientation = player.mesh.global_transform.basis

@@ -24,7 +24,7 @@ func check():
 	return not player.is_on_floor()# and player.linear_velocity.y <= 0
 
 
-func process(delta):
+func physics_process(delta):
 	player.linear_velocity += gravity * delta
 
 	var vv = player.linear_velocity.y # vertical velocity

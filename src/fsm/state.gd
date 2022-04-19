@@ -4,23 +4,29 @@ class_name State
 var player
 var rig
 
-signal entered
-signal exited
-
-# warning-ignore:unused_signal
-signal finished
-
 func init():
 	pass
 
+
 func enter():
-	emit_signal("entered")
+	pass
+
 
 func exit():
-	emit_signal("exited")
+	pass
+
 
 func process(_delta):
 	pass
+
+
+func input(_event):
+	pass
+
+
+func physics_process(_delta):
+	pass
+
 
 func check() -> bool:
 	return false

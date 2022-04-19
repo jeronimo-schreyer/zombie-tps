@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://models/weapons/odachi/SM_Wep_Odachi_01/SM_Wep_Odachi_01_Mesh.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://models/ninja/ninja/Walk F.anim" type="Animation" id=2]
@@ -193,7 +193,17 @@ blend_point_0/pos = 0.0
 blend_point_1/node = SubResource( 29 )
 blend_point_1/pos = 1.0
 
+[sub_resource type="AnimationNodeOneShot" id=40]
+filter_enabled = true
+filters = [ "..", "Root/Skeleton/Sword:visible", "Root/Skeleton:clavicle_l", "Root/Skeleton:clavicle_r", "Root/Skeleton:eyebrows", "Root/Skeleton:eyes", "Root/Skeleton:finger_1_l", "Root/Skeleton:finger_1_r", "Root/Skeleton:finger_2_l", "Root/Skeleton:finger_2_r", "Root/Skeleton:finger_3_l", "Root/Skeleton:finger_3_r", "Root/Skeleton:hand_l", "Root/Skeleton:hand_r", "Root/Skeleton:head", "Root/Skeleton:index_finger_1_l", "Root/Skeleton:index_finger_1_r", "Root/Skeleton:index_finger_2_l", "Root/Skeleton:index_finger_2_r", "Root/Skeleton:index_finger_3_l", "Root/Skeleton:index_finger_3_r", "Root/Skeleton:lowerarm_l", "Root/Skeleton:lowerarm_r", "Root/Skeleton:neck_1", "Root/Skeleton:spine_1", "Root/Skeleton:spine_2", "Root/Skeleton:spine_3", "Root/Skeleton:thumb_1_l", "Root/Skeleton:thumb_1_r", "Root/Skeleton:thumb_2_l", "Root/Skeleton:thumb_2_r", "Root/Skeleton:upper_arm_l", "Root/Skeleton:upper_arm_r" ]
+
 [sub_resource type="AnimationNodeBlend2" id=31]
+
+[sub_resource type="AnimationNodeAnimation" id=41]
+animation = "Withdraw Sword"
+
+[sub_resource type="AnimationNodeAnimation" id=42]
+animation = "Seathing Sword"
 
 [sub_resource type="AnimationNodeAnimation" id=32]
 animation = "Idle"
@@ -212,22 +222,34 @@ blend_point_1/pos = 0.6
 blend_point_2/node = SubResource( 34 )
 blend_point_2/pos = 1.0
 
+[sub_resource type="AnimationNodeOneShot" id=43]
+filter_enabled = true
+filters = [ "..", "Root/Skeleton/Sword:visible", "Root/Skeleton:clavicle_l", "Root/Skeleton:clavicle_r", "Root/Skeleton:eyebrows", "Root/Skeleton:eyes", "Root/Skeleton:finger_1_l", "Root/Skeleton:finger_1_r", "Root/Skeleton:finger_2_l", "Root/Skeleton:finger_2_r", "Root/Skeleton:finger_3_l", "Root/Skeleton:finger_3_r", "Root/Skeleton:hand_l", "Root/Skeleton:hand_r", "Root/Skeleton:head", "Root/Skeleton:index_finger_1_l", "Root/Skeleton:index_finger_1_r", "Root/Skeleton:index_finger_2_l", "Root/Skeleton:index_finger_2_r", "Root/Skeleton:index_finger_3_l", "Root/Skeleton:index_finger_3_r", "Root/Skeleton:lowerarm_l", "Root/Skeleton:lowerarm_r", "Root/Skeleton:neck_1", "Root/Skeleton:spine_1", "Root/Skeleton:spine_2", "Root/Skeleton:spine_3", "Root/Skeleton:thumb_1_l", "Root/Skeleton:thumb_1_r", "Root/Skeleton:thumb_2_l", "Root/Skeleton:thumb_2_r", "Root/Skeleton:upper_arm_l", "Root/Skeleton:upper_arm_r" ]
+
 [sub_resource type="AnimationNodeBlendTree" id=36]
-graph_offset = Vector2( -496, 184 )
+graph_offset = Vector2( 321, 243 )
 nodes/Crouch/node = SubResource( 30 )
 nodes/Crouch/position = Vector2( -175, 47 )
+"nodes/Seathing Sword/node" = SubResource( 40 )
+"nodes/Seathing Sword/position" = Vector2( 920, 180 )
 nodes/Stance/node = SubResource( 31 )
 nodes/Stance/position = Vector2( 240, 80 )
+"nodes/Sword 1/node" = SubResource( 41 )
+"nodes/Sword 1/position" = Vector2( 280, 280 )
+"nodes/Sword 2/node" = SubResource( 42 )
+"nodes/Sword 2/position" = Vector2( 700, 300 )
 nodes/Walk/node = SubResource( 35 )
 nodes/Walk/position = Vector2( -60, 220 )
-nodes/output/position = Vector2( 500, 80 )
-node_connections = [ "output", 0, "Stance", "Stance", 0, "Crouch", "Stance", 1, "Walk" ]
+"nodes/Withdraw Sword/node" = SubResource( 43 )
+"nodes/Withdraw Sword/position" = Vector2( 540, 100 )
+nodes/output/position = Vector2( 1180, 240 )
+node_connections = [ "output", 0, "Seathing Sword", "Stance", 0, "Crouch", "Stance", 1, "Walk", "Seathing Sword", 0, "Withdraw Sword", "Seathing Sword", 1, "Sword 2", "Withdraw Sword", 0, "Stance", "Withdraw Sword", 1, "Sword 1" ]
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Run Jump"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
-xfade_time = 0.2
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=38]
 switch_mode = 2
@@ -296,14 +318,14 @@ shape = SubResource( 15 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="Root" type="Spatial" parent="Mesh"]
-transform = Transform( 0.00729817, 0.00680622, 0.000641906, 0.000154004, 0.000775031, -0.00996873, -0.00683469, 0.00728524, 0.000460812, 0.0716146, 0.285382, 0.0577043 )
+transform = Transform( 0.00754996, -0.00652945, -0.000603606, -0.00014322, 0.000756091, -0.00997035, 0.00655572, 0.00753622, 0.000477331, -0.100262, -0.0992225, 0.0654023 )
 
 [node name="Skeleton" type="Skeleton" parent="Mesh/Root"]
 bones/0/name = "pelvis"
 bones/0/parent = -1
 bones/0/rest = Transform( 0, 2.98023e-08, -1, 0.988775, -0.149413, -2.98023e-08, -0.149413, -0.988775, 0, 1.55555e-13, -2.08289e-06, -87.6276 )
 bones/0/enabled = true
-bones/0/bound_children = [  ]
+bones/0/bound_children = [ NodePath("CoinBag") ]
 bones/1/name = "spine_1"
 bones/1/parent = 0
 bones/1/rest = Transform( -0.980128, 0.198366, 1.3926e-07, 0.198366, 0.980128, 2.46035e-07, -8.76879e-08, 2.6877e-07, -1, -1.54972e-06, 10.3933, -1.11525e-09 )
@@ -418,7 +440,7 @@ bones/23/name = "hand_r"
 bones/23/parent = 22
 bones/23/rest = Transform( 0.996475, 0.0155353, -0.0824392, 0.0109211, 0.950317, 0.311091, 0.0831763, -0.310894, 0.946798, 1.30402e-06, 27.1145, 0.0381351 )
 bones/23/enabled = true
-bones/23/bound_children = [  ]
+bones/23/bound_children = [ NodePath("Sword") ]
 bones/24/name = "thumb_1_r"
 bones/24/parent = 23
 bones/24/rest = Transform( 0.905104, 0.415785, -0.0889404, -0.378041, 0.882672, 0.27924, 0.194609, -0.219118, 0.956094, 1.17098, 3.51399, -4.50554 )
@@ -507,7 +529,7 @@ skin = SubResource( 1 )
 material/0 = null
 
 [node name="CoinBag" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( 0, 2.98023e-08, -1, 0.988775, -0.149413, -2.98023e-08, -0.149413, -0.988775, 0, 1.55555e-13, -2.08289e-06, -87.6276 )
+transform = Transform( -1.62995e-16, 8.94069e-08, -1, 0.988775, -0.149412, -3.87079e-08, -0.149412, -0.988775, -5.89356e-08, -7.18187e-14, -2.08289e-06, -87.6276 )
 visible = false
 bone_name = "pelvis"
 
@@ -517,7 +539,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( -0.0110374, -0.94988, -0.312421, -0.0858626, 0.312186, -0.946134, 0.996246, 0.0163825, -0.0850059, -80.1627, -4.8424, -139.152 )
+transform = Transform( 0.969149, -0.179878, -0.168507, 0.000203013, 0.684248, -0.72925, 0.246476, 0.706718, 0.663176, -29.9447, 10.8042, -83.4016 )
 visible = false
 bone_name = "hand_r"
 
@@ -573,9 +595,11 @@ parameters/conditions/On_Ground = false
 parameters/On_Air/playback = SubResource( 13 )
 parameters/On_Air/conditions/Fall = false
 parameters/On_Ground/playback = SubResource( 14 )
-parameters/On_Ground/Movement/Crouch/blend_position = 0
+parameters/On_Ground/Movement/Crouch/blend_position = 0.0
+"parameters/On_Ground/Movement/Seathing Sword/active" = false
 parameters/On_Ground/Movement/Stance/blend_amount = 1.0
-parameters/On_Ground/Movement/Walk/blend_position = 0.998302
+parameters/On_Ground/Movement/Walk/blend_position = 0.0
+"parameters/On_Ground/Movement/Withdraw Sword/active" = false
 
 [node name="ImmediateGeometry" parent="." instance=ExtResource( 17 )]
 

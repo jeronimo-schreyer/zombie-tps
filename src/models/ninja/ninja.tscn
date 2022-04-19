@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=81 format=2]
 
 [ext_resource path="res://models/weapons/odachi/SM_Wep_Odachi_01/SM_Wep_Odachi_01_Mesh.mesh" type="ArrayMesh" id=1]
 [ext_resource path="res://models/ninja/ninja/Walk F.anim" type="Animation" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://models/ninja/ninja/Run F.anim" type="Animation" id=11]
 [ext_resource path="res://models/ninja/ninja/Walk L.anim" type="Animation" id=12]
 [ext_resource path="res://models/ninja/ninja/Walk R.anim" type="Animation" id=13]
+[ext_resource path="res://models/ninja/ninja/Hit1.anim" type="Animation" id=14]
+[ext_resource path="res://models/ninja/ninja/AttackToIdle.anim" type="Animation" id=15]
 [ext_resource path="res://player/player.gd" type="Script" id=16]
 [ext_resource path="res://debug/movement_line/movement_line.tscn" type="PackedScene" id=17]
 [ext_resource path="res://models/ninja/ninja/Idle.anim" type="Animation" id=18]
@@ -28,6 +30,8 @@
 [ext_resource path="res://models/ninja/ninja/Braced Hang Over.anim" type="Animation" id=28]
 [ext_resource path="res://models/ninja/ninja/Crouch Idle.anim" type="Animation" id=29]
 [ext_resource path="res://models/ninja/ninja/Crouch Walk.anim" type="Animation" id=30]
+[ext_resource path="res://models/ninja/ninja/Hit3.anim" type="Animation" id=31]
+[ext_resource path="res://models/ninja/ninja/Hit2.anim" type="Animation" id=32]
 
 [sub_resource type="CapsuleShape" id=15]
 radius = 0.3
@@ -227,7 +231,7 @@ filter_enabled = true
 filters = [ "..", "Root/Skeleton/Sword:visible", "Root/Skeleton:clavicle_l", "Root/Skeleton:clavicle_r", "Root/Skeleton:eyebrows", "Root/Skeleton:eyes", "Root/Skeleton:finger_1_l", "Root/Skeleton:finger_1_r", "Root/Skeleton:finger_2_l", "Root/Skeleton:finger_2_r", "Root/Skeleton:finger_3_l", "Root/Skeleton:finger_3_r", "Root/Skeleton:hand_l", "Root/Skeleton:hand_r", "Root/Skeleton:head", "Root/Skeleton:index_finger_1_l", "Root/Skeleton:index_finger_1_r", "Root/Skeleton:index_finger_2_l", "Root/Skeleton:index_finger_2_r", "Root/Skeleton:index_finger_3_l", "Root/Skeleton:index_finger_3_r", "Root/Skeleton:lowerarm_l", "Root/Skeleton:lowerarm_r", "Root/Skeleton:neck_1", "Root/Skeleton:spine_1", "Root/Skeleton:spine_2", "Root/Skeleton:spine_3", "Root/Skeleton:thumb_1_l", "Root/Skeleton:thumb_1_r", "Root/Skeleton:thumb_2_l", "Root/Skeleton:thumb_2_r", "Root/Skeleton:upper_arm_l", "Root/Skeleton:upper_arm_r" ]
 
 [sub_resource type="AnimationNodeBlendTree" id=36]
-graph_offset = Vector2( 321, 243 )
+graph_offset = Vector2( 323, 178 )
 nodes/Crouch/node = SubResource( 30 )
 nodes/Crouch/position = Vector2( -175, 47 )
 "nodes/Seathing Sword/node" = SubResource( 40 )
@@ -248,6 +252,57 @@ node_connections = [ "output", 0, "Seathing Sword", "Stance", 0, "Crouch", "Stan
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Run Jump"
 
+[sub_resource type="AnimationNodeAnimation" id=44]
+animation = "Hit1"
+
+[sub_resource type="AnimationNodeAnimation" id=45]
+animation = "Hit2"
+
+[sub_resource type="AnimationNodeAnimation" id=46]
+animation = "Hit3"
+
+[sub_resource type="AnimationNodeAnimation" id=47]
+animation = "AttackToIdle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=48]
+switch_mode = 2
+advance_condition = "Attack1"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+switch_mode = 2
+advance_condition = "Attack2"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
+switch_mode = 2
+auto_advance = true
+xfade_time = 0.1
+priority = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
+switch_mode = 2
+auto_advance = true
+xfade_time = 0.1
+priority = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+switch_mode = 2
+auto_advance = true
+xfade_time = 0.1
+priority = 2
+
+[sub_resource type="AnimationNodeStateMachine" id=53]
+states/Hit1/node = SubResource( 44 )
+states/Hit1/position = Vector2( 227, 57 )
+states/Hit2/node = SubResource( 45 )
+states/Hit2/position = Vector2( 426, 57 )
+states/Hit3/node = SubResource( 46 )
+states/Hit3/position = Vector2( 602, 57 )
+states/empty/node = SubResource( 47 )
+states/empty/position = Vector2( 602, 210 )
+transitions = [ "Hit1", "Hit2", SubResource( 48 ), "Hit2", "Hit3", SubResource( 49 ), "Hit3", "empty", SubResource( 50 ), "Hit2", "empty", SubResource( 51 ), "Hit1", "empty", SubResource( 52 ) ]
+start_node = "Hit1"
+end_node = "empty"
+
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
 xfade_time = 0.1
 
@@ -259,6 +314,14 @@ xfade_time = 0.1
 [sub_resource type="AnimationNodeStateMachineTransition" id=39]
 xfade_time = 0.2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=54]
+switch_mode = 2
+auto_advance = true
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=55]
+xfade_time = 0.1
+
 [sub_resource type="AnimationNodeStateMachine" id=8]
 "states/Climb Up/node" = SubResource( 16 )
 "states/Climb Up/position" = Vector2( 395, -23 )
@@ -266,10 +329,12 @@ states/Movement/node = SubResource( 36 )
 states/Movement/position = Vector2( 395, 84 )
 "states/Run Jump/node" = SubResource( 6 )
 "states/Run Jump/position" = Vector2( 573, 84 )
-transitions = [ "Movement", "Climb Up", SubResource( 37 ), "Climb Up", "Movement", SubResource( 38 ), "Movement", "Run Jump", SubResource( 39 ) ]
+"states/Sword Attack/node" = SubResource( 53 )
+"states/Sword Attack/position" = Vector2( 149, 84 )
+transitions = [ "Movement", "Climb Up", SubResource( 37 ), "Climb Up", "Movement", SubResource( 38 ), "Movement", "Run Jump", SubResource( 39 ), "Sword Attack", "Movement", SubResource( 54 ), "Movement", "Sword Attack", SubResource( 55 ) ]
 start_node = "Movement"
 end_node = "Run Jump"
-graph_offset = Vector2( -92, -90 )
+graph_offset = Vector2( -158, -89 )
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=9]
 advance_condition = "On_Air"
@@ -280,7 +345,6 @@ advance_condition = "On_Ground"
 xfade_time = 0.06
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=20]
-xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
 switch_mode = 2
@@ -292,7 +356,7 @@ xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachine" id=11]
 "states/Braced Hang Over/node" = SubResource( 19 )
-"states/Braced Hang Over/position" = Vector2( 319, -52 )
+"states/Braced Hang Over/position" = Vector2( 289, -68 )
 states/On_Air/node = SubResource( 5 )
 states/On_Air/position = Vector2( 395, 41 )
 states/On_Ground/node = SubResource( 8 )
@@ -307,6 +371,8 @@ graph_offset = Vector2( -367, -104 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=56]
+
 [node name="KinematicBody" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 16 )
@@ -318,7 +384,7 @@ shape = SubResource( 15 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="Root" type="Spatial" parent="Mesh"]
-transform = Transform( 0.00754996, -0.00652945, -0.000603606, -0.00014322, 0.000756091, -0.00997035, 0.00655572, 0.00753622, 0.000477331, -0.100262, -0.0992225, 0.0654023 )
+transform = Transform( 0.00730316, -0.00680962, -0.000541263, 2.00838e-05, 0.000813753, -0.00996681, 0.00683107, 0.00727783, 0.000607973, -0.0576468, -0.0582985, 0.0611432 )
 
 [node name="Skeleton" type="Skeleton" parent="Mesh/Root"]
 bones/0/name = "pelvis"
@@ -539,7 +605,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( 0.969149, -0.179878, -0.168507, 0.000203013, 0.684248, -0.72925, 0.246476, 0.706718, 0.663176, -29.9447, 10.8042, -83.4016 )
+transform = Transform( 0.894325, 0.044696, -0.44518, -0.438605, 0.284101, -0.852593, 0.0883678, 0.957753, 0.273683, -38.1398, 2.8036, -86.0817 )
 visible = false
 bone_name = "hand_r"
 
@@ -563,6 +629,7 @@ debug_shape_thickness = 5
 root_node = NodePath("../Mesh")
 method_call_mode = 1
 "anims/Air Loop" = ExtResource( 3 )
+anims/AttackToIdle = ExtResource( 15 )
 "anims/Block Hit" = ExtResource( 23 )
 "anims/Block Idle" = ExtResource( 20 )
 "anims/Braced Hang Idle" = ExtResource( 25 )
@@ -571,6 +638,9 @@ method_call_mode = 1
 "anims/Crouch Idle" = ExtResource( 29 )
 "anims/Crouch Walk" = ExtResource( 30 )
 anims/Fall = ExtResource( 6 )
+anims/Hit1 = ExtResource( 14 )
+anims/Hit2 = ExtResource( 32 )
+anims/Hit3 = ExtResource( 31 )
 anims/Idle = ExtResource( 18 )
 anims/Kick = ExtResource( 19 )
 "anims/Run B" = ExtResource( 5 )
@@ -589,9 +659,10 @@ anims/Kick = ExtResource( 19 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
+active = true
 parameters/playback = SubResource( 12 )
 parameters/conditions/On_Air = false
-parameters/conditions/On_Ground = false
+parameters/conditions/On_Ground = true
 parameters/On_Air/playback = SubResource( 13 )
 parameters/On_Air/conditions/Fall = false
 parameters/On_Ground/playback = SubResource( 14 )
@@ -600,6 +671,9 @@ parameters/On_Ground/Movement/Crouch/blend_position = 0.0
 parameters/On_Ground/Movement/Stance/blend_amount = 1.0
 parameters/On_Ground/Movement/Walk/blend_position = 0.0
 "parameters/On_Ground/Movement/Withdraw Sword/active" = false
+"parameters/On_Ground/Sword Attack/playback" = SubResource( 56 )
+"parameters/On_Ground/Sword Attack/conditions/Attack1" = false
+"parameters/On_Ground/Sword Attack/conditions/Attack2" = false
 
 [node name="ImmediateGeometry" parent="." instance=ExtResource( 17 )]
 

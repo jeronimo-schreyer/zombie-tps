@@ -31,11 +31,18 @@ func check():
 	return player.is_on_floor()
 
 
-func process(delta):
-	if Input.is_action_just_pressed("sword"):
+func process(_delta):
+	if Input.is_action_just_pressed("toggle_sword"):
 		on_combat = !on_combat
 		player.anim_tree.set("parameters/On_Ground/Movement/Withdraw Sword/active", on_combat)
 		player.anim_tree.set("parameters/On_Ground/Movement/Seathing Sword/active", !on_combat)
+
+	if Input.is_action_just_pressed("attack") and on_combat:
+		player.anim_tree.get("parameters/On_Ground/playback").travel("Sword Attack")
+		var anim = player.anim_tree.get("parameters/On_Ground/Sword Attack/playback")
+		var current_hit = anim.get_current_node().trim_prefix("Hit")
+		if not current_hit.empty() and current_hit != "empty":
+			player.anim_tree.set("parameters/On_Ground/Sword Attack/conditions/Attack%s" % current_hit, true)
 
 	if Input.is_action_just_pressed("action"):
 		if player.climb_raycast.is_colliding():

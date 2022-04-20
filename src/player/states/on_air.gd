@@ -62,7 +62,11 @@ func physics_process(delta):
 	orientation.x = -orientation.z.cross(Vector3.UP)
 	player.mesh.global_transform.basis = orientation.orthonormalized()
 
-#	# edge detection
+	# don't detect edges if collided with the is_on_ceiling
+	if player.is_on_ceiling():
+		player.jump_edge_raycast.enabled = false
+
+	# edge detection
 	if vv < 0 and player.jump_edge_raycast.is_colliding():
 
 		# align the mesh with the wall normal

@@ -1,12 +1,12 @@
 extends "res://fsm/state.gd"
 
 
-export (float) var acceleration = 20
-export (float) var walk_speed = 10
+export (float) var acceleration = 80
+export (float) var walk_speed = 5
 export (float) var deacceleration_factor = 3.0
 export (float) var turn_speed = 10
-export (float) var crouch_speed = 5
-export (float) var jump_force = 10
+export (float) var crouch_speed = 3
+export (float) var jump_force = 20
 
 
 var gravity : Vector3

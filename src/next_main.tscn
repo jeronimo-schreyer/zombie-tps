@@ -19,7 +19,6 @@ fog_depth_curve = 2.0
 fog_height_min = 197.6
 fog_height_max = -171.5
 tonemap_mode = 3
-auto_exposure_enabled = true
 auto_exposure_scale = 2.0
 auto_exposure_min_luma = 2.0
 auto_exposure_max_luma = 5.0

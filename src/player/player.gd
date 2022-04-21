@@ -24,3 +24,6 @@ func _ready():
 
 func set_can_move(_can_move: bool):
 	can_move = _can_move
+
+func add_force_facing_player(force : float):
+	linear_velocity += mesh.global_transform.basis.z * force

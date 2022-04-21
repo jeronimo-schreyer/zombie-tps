@@ -38,6 +38,7 @@ func process(_delta):
 		player.anim_tree.set("parameters/On_Ground/Movement/Seathing Sword/active", !on_combat)
 
 	if Input.is_action_just_pressed("attack") and on_combat:
+		player.can_move = false
 		player.anim_tree.get("parameters/On_Ground/playback").travel("Sword Attack")
 		var anim = player.anim_tree.get("parameters/On_Ground/Sword Attack/playback")
 		var current_hit = anim.get_current_node().trim_prefix("Hit")

@@ -247,7 +247,7 @@ nodes/Walk/position = Vector2( -60, 220 )
 "nodes/Withdraw Sword/node" = SubResource( 43 )
 "nodes/Withdraw Sword/position" = Vector2( 540, 100 )
 nodes/output/position = Vector2( 1180, 240 )
-node_connections = [ "output", 0, "Seathing Sword", "Stance", 0, "Crouch", "Stance", 1, "Walk", "Seathing Sword", 0, "Withdraw Sword", "Seathing Sword", 1, "Sword 2", "Withdraw Sword", 0, "Stance", "Withdraw Sword", 1, "Sword 1" ]
+node_connections = [ "output", 0, "Seathing Sword", "Stance", 0, "Crouch", "Stance", 1, "Walk", "Withdraw Sword", 0, "Stance", "Withdraw Sword", 1, "Sword 1", "Seathing Sword", 0, "Withdraw Sword", "Seathing Sword", 1, "Sword 2" ]
 
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Run Jump"
@@ -302,6 +302,7 @@ states/empty/position = Vector2( 602, 210 )
 transitions = [ "Hit1", "Hit2", SubResource( 48 ), "Hit2", "Hit3", SubResource( 49 ), "Hit3", "empty", SubResource( 50 ), "Hit2", "empty", SubResource( 51 ), "Hit1", "empty", SubResource( 52 ) ]
 start_node = "Hit1"
 end_node = "empty"
+graph_offset = Vector2( -11, 29 )
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
 xfade_time = 0.1
@@ -384,7 +385,7 @@ shape = SubResource( 15 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="Root" type="Spatial" parent="Mesh"]
-transform = Transform( 0.00730316, -0.00680962, -0.000541263, 2.00838e-05, 0.000813753, -0.00996681, 0.00683107, 0.00727783, 0.000607973, -0.0576468, -0.0582985, 0.0611432 )
+transform = Transform( 0.00569667, -0.00786405, 0.00238846, -0.000148986, -0.00300444, -0.00953683, 0.00821741, 0.00539723, -0.00182869, 0.217029, -0.118842, -0.162297 )
 
 [node name="Skeleton" type="Skeleton" parent="Mesh/Root"]
 bones/0/name = "pelvis"
@@ -605,7 +606,7 @@ mesh = ExtResource( 7 )
 material/0 = null
 
 [node name="Sword" type="BoneAttachment" parent="Mesh/Root/Skeleton"]
-transform = Transform( 0.894325, 0.044696, -0.44518, -0.438605, 0.284101, -0.852593, 0.0883678, 0.957753, 0.273683, -38.1398, 2.8036, -86.0817 )
+transform = Transform( 0.0993899, -0.934235, -0.342531, 0.639827, 0.323638, -0.697052, 0.762066, -0.14988, 0.629915, -68.3236, -22.3088, -126.655 )
 visible = false
 bone_name = "hand_r"
 
@@ -659,7 +660,6 @@ anims/Kick = ExtResource( 19 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 12 )
 parameters/conditions/On_Air = false
 parameters/conditions/On_Ground = true

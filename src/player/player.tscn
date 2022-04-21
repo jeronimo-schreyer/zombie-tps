@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://fsm/state_machine.gd" type="Script" id=1]
+[ext_resource path="res://player/fsm/state_machine.gd" type="Script" id=1]
 [ext_resource path="res://player/states/on_ground.tres" type="Resource" id=2]
 [ext_resource path="res://models/ninja/ninja.tscn" type="PackedScene" id=3]
-[ext_resource path="res://player/rig.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://player/states/on_air.tres" type="Resource" id=5]
 
 [node name="Player" type="Spatial"]

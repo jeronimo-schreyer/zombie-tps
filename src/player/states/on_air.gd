@@ -1,4 +1,4 @@
-extends "res://fsm/state.gd"
+extends "res://player/fsm/state.gd"
 
 
 export (float) var acceleration = 5

@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://player/camera.gd" type="Script" id=1]
+[ext_resource path="res://models/ninja/ninja/Character_Mat.material" type="Material" id=2]
 
 [node name="CameraRig" type="Spatial"]
 script = ExtResource( 1 )
+player_material = ExtResource( 2 )
 
 [node name="SpringArm" type="SpringArm" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1, 1, 0 )
@@ -12,6 +14,7 @@ margin = -0.3
 
 [node name="Camera" type="Camera" parent="SpringArm"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+fov = 50.0
 far = 150.0
 
 [node name="Tween" type="Tween" parent="."]

@@ -9,13 +9,48 @@ export (float) var mouse_sensitivity = 0.1
 export (float) var max_camera_angle = 30
 export (float) var movement_speed = 5
 export (NodePath) var player
+export (SpatialMaterial) var player_material
 
 onready var spring = $SpringArm
 onready var camera = $SpringArm/Camera
 onready var tween = $Tween
 
+var is_third_person = true
 var offset : Vector3
 var zoom_level := 6.0 setget set_zoom_level
+
+onready var camera_switch_animation = [
+#	{
+#		"object": spring,
+#		"property": "spring_length",
+#		"initial": 0.0,
+#		"final": zoom_level,
+#	},
+	{
+		"object": spring,
+		"property": "translation",
+		"initial": Vector3(0.0, 1.7, 0.2),
+		"final": Vector3(-1.0, 1.0, 0.0),
+	},
+	{
+		"object": camera,
+		"property": "fov",
+		"initial": 70.0,
+		"final": 50.0,
+	},
+#	{
+#		"object": camera,
+#		"property": "translation",
+#		"initial": Vector3(0.0, 0.0, 0.0),
+#		"final": Vector3(0.0, 0.0, zoom_level),
+#	},
+	{
+		"object": player_material,
+		"property": "albedo_color",
+		"initial": Color.transparent,
+		"final": Color.white,
+	},
+]
 
 
 # Called when the node enters the scene tree for the first time.
@@ -40,6 +75,20 @@ func _process(delta):
 
 	if Input.is_action_pressed("zoom_camera_out"):
 		set_zoom_level(zoom_level + zoom_factor)
+
+	if Input.is_action_just_pressed("toggle_perspective"):
+		player_material.flags_transparent = true
+		is_third_person = !is_third_person
+		for track in camera_switch_animation:
+			tween.interpolate_property(track.object, track.property, \
+				track.initial if is_third_person else track.final, \
+				track.final if is_third_person else track.initial, 1.0, Tween.TRANS_LINEAR)
+		tween.interpolate_property(spring, "spring_length", zoom_level if not is_third_person else 0.0, zoom_level if is_third_person else 0.0, 1.0, Tween.TRANS_LINEAR)
+		tween.start()
+
+		if is_third_person:
+			yield(tween, "tween_all_completed")
+			player_material.flags_transparent = false
 
 
 func _input(event):
